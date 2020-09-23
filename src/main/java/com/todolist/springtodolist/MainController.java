@@ -25,8 +25,12 @@ public class MainController {
 
     @PostMapping
     public String addNewTask(@RequestParam String nameTask, Map<String, Object> objectMap) {
-        Task task = new Task(nameTask, Status.ACTIVE);
-        taskRepo.save(task);
+        Task task;
+        if (nameTask != ""){
+            task = new Task(nameTask, Status.ACTIVE);
+            taskRepo.save(task);
+        }
+
         Iterable<Task> tasks = taskRepo.findAll();
         objectMap.put("tasks", tasks);
         return "main";
