@@ -10,11 +10,11 @@ public class Task {
     private Integer id;
 
     private String nameTask;
-    private Status status;
+    private boolean status;
 
     public Task(){}
 
-    public Task(String nameTask, Status status) {
+    public Task(String nameTask, boolean status) {
         this.nameTask = nameTask;
         this.status = status;
     }
@@ -35,11 +35,11 @@ public class Task {
         this.nameTask = nameTask;
     }
 
-    public Status getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

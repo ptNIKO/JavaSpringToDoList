@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDoList</title>
+    <h1>My to do list</h1>
+</head>
+<body align="center">
+<div>
+<form th:action="@{/addNewTask}" method="post">
+         <input type="text" th:name="nameTask" placeholder="Write your task"/>
+         <button type="submit">Add</button>
+</form>
+    <div>
+        <label style="color: blueviolet;">________New Tasks________</label>
+    </div>
+
+</div>
+<form th:action="@{/submitTask}" method="post" >
+        <div th:each="task : ${tasks}">
+            <d th:text="${task.id}">...</d>
+            <label th:utext="${task.name_task}">...</label>
+            <input name="checkboxName" th:id="${task.name_task}" type="checkbox"/>
+            <button type="submit">Завершить</button>
+        </div>
+</form>
+    <div>
+        <label style="color:darkgreen">________Сompleted Tasks________</label>
+    </div>
+
+</body>
+</html>
