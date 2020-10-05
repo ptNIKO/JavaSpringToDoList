@@ -5,9 +5,11 @@ import com.todolist.springtodolist.model.Task;
 import com.todolist.springtodolist.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -16,14 +18,15 @@ public class MainController {
 
 
     @GetMapping
-    public String main(Map<String, Object> model) {
+    public String main(Model model) {
         Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
+        model.addAttribute("tasks", tasks);
         return "main";
     }
 
+
     @PostMapping(value = {"/addNewTask"})
-    public String addNewTask(@RequestParam String nameTask, Map<String, Object> objectMap) {
+    public String addNewTask(@RequestParam String nameTask, Model model) {
         Task task;
         if (nameTask != ""){
             task = new Task(nameTask, true);
@@ -31,21 +34,41 @@ public class MainController {
         }
 
         Iterable<Task> tasks = taskRepo.findAll();
-        objectMap.put("tasks", tasks);
+        model.addAttribute("tasks", tasks);
         return "main";
     }
 
     @PostMapping("submitTask")
-    public String submitTask(@RequestParam(value = "checkboxName", required = false) String checkboxValue, Map<String, Object> model) {
+    public String submitTask(@RequestParam(value = "checkboxName", required = false) String checkboxValue,
+                             @ModelAttribute("idTask") String idTask,
+                             Model model) {
 
         if(checkboxValue != null) {
             System.out.println("checkbox is checked");
+
         }
         else {
             System.out.println("checkbox is not checked");
         }
+
         Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
+        Task task = taskRepo.findById(Integer.parseInt(idTask)).get();
+
+
+        if (checkboxValue != null && taskRepo.findById(Integer.parseInt(idTask)).get().isStatus()){
+            task.setStatus(false);
+            taskRepo.save(task);
+            //taskRepo.findById(Integer.parseInt(idTask)).get().setStatus(false);
+        }
+        else{
+            task.setStatus(true);
+            //taskRepo.findById(Integer.parseInt(idTask)).get().setStatus(true);
+            taskRepo.save(task);
+        }
+
+        //model.addAttribute("task", task);
+        model.addAttribute("tasks", tasks);
+        System.out.println(idTask);
         return "main";
     }
 }

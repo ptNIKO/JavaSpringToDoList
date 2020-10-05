@@ -14,19 +14,32 @@
     <div>
         <label style="color: blueviolet;">________New Tasks________</label>
     </div>
-
 </div>
-<form th:action="@{/submitTask}" method="post" >
-        <div th:each="task : ${tasks}">
-            <d th:text="${task.id}">...</d>
-            <label th:utext="${task.name_task}">...</label>
-            <input name="checkboxName" th:id="${task.name_task}" type="checkbox"/>
+
+<div th:each="task : ${tasks}">
+    <form th:action="@{/submitTask}" method="post" >
+        <div th:if="${task.status == true}">
+            <input type="hidden" name="idTask" th:text="${task.id}" th:value="${task.id}"/>
+            <input type="hidden" th:text="${task.name_task}" />
+            <input name="checkboxName" type="checkbox"/>
             <button type="submit">Завершить</button>
         </div>
-</form>
-    <div>
-        <label style="color:darkgreen">________Сompleted Tasks________</label>
-    </div>
+    </form>
+</div>
+<div>
+    <label style="color:darkgreen">________Сompleted Tasks________</label>
+</div>
+<div th:each="task : ${tasks}">
+    <form th:action="@{/submitTask}" method="post" >
+        <div th:if="${task.status == false}">
+            <input type="hidden" name="idTask" th:text="${task.id}" th:value="${task.id}"/>
+            <input type="hidden" th:text="${task.name_task}" />
+            <input name="checkboxName" type="checkbox" checked="checked"/>
+            <button type="submit">Доделать</button>
+        </div>
+    </form>
+</div>
+
 
 </body>
 </html>
