@@ -54,19 +54,15 @@ public class MainController {
         Iterable<Task> tasks = taskRepo.findAll();
         Task task = taskRepo.findById(Integer.parseInt(idTask)).get();
 
-
         if (checkboxValue != null && taskRepo.findById(Integer.parseInt(idTask)).get().isStatus()){
             task.setStatus(false);
             taskRepo.save(task);
-            //taskRepo.findById(Integer.parseInt(idTask)).get().setStatus(false);
         }
         else{
             task.setStatus(true);
-            //taskRepo.findById(Integer.parseInt(idTask)).get().setStatus(true);
             taskRepo.save(task);
         }
 
-        //model.addAttribute("task", task);
         model.addAttribute("tasks", tasks);
         System.out.println(idTask);
         return "main";
