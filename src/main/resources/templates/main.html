@@ -48,7 +48,7 @@
 </div>
     <div class="container">
         <div th:each="task : ${tasks}">
-            <form th:action="@{/submitTask}" method="post" >
+            <form th:action="@{/separat}" method="post" >
                 <div th:if="${task.status == true}">
                     <div class="row">
                         <input type="hidden" name="idTask" th:value="${task.id}"/>
@@ -57,7 +57,10 @@
                         </div>
                         <div class="col-sm-4">
                             <input name="checkboxName" type="checkbox"/>
-                            <button type="submit">Завершить</button>
+                            <button type="submit" name="completeButton" value="completeButton">Complete</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" name="deleteButton" value="deleteButton">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -69,7 +72,7 @@
 </div>
     <div class="container">
         <div th:each="task : ${tasks}">
-            <form th:action="@{/submitTask}" method="post" >
+            <form th:action="@{/separat}" method="post" >
                 <div th:if="${task.status == false}">
                     <div class="row">
                         <input type="hidden" name="idTask" th:value="${task.id}"/>
@@ -78,7 +81,10 @@
                         </div>
                         <div class="col-sm-4">
                             <input name="checkboxName" type="checkbox" checked="checked"/>
-                            <button type="submit">Доделать</button>
+                            <button type="submit" name="finishUpButton" value="finishUpButton">FinishUp</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" name="deleteButton" value="deleteButton">Delete</button>
                         </div>
                     </div>
                 </div>
